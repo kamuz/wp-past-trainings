@@ -9,17 +9,22 @@
  */
 
 /**
- * Load CSS and JavaScript files
+ * Add image sizes for sliders
  */
-
 add_image_size( 'slider-image', 820, 485, true );
 add_image_size( 'event-thumbnail', 80, 80, true );
 
+/**
+ * Load CSS and JavaScript files
+ */
 function imma_past_training_css_js() {
-    wp_enqueue_style( 'imma_past_training_bxslider_css', plugins_url( 'css/', __FILE__ ).'bxslider.css' ); 
+    wp_enqueue_style( 'imma_past_training_bxslider_css', plugins_url( 'css/', __FILE__ ).'bxslider.css' );
+    wp_enqueue_style( 'imma_past_training_owl_css', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css' );
+    wp_enqueue_style( 'imma_past_training_owl_theme_css', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css' );
     wp_enqueue_style( 'imma_past_training_font_awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'); 
     wp_enqueue_style( 'imma_past_training_style_css', plugins_url( 'css/', __FILE__ ).'style.css' ); 
     wp_enqueue_script( 'imma_past_training_bxslider_js',  plugins_url( 'js/', __FILE__ ).'bxslider.js', array('jquery') );
+    wp_enqueue_script( 'imma_past_training_owl_js', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js', array('jquery') );
     wp_enqueue_script( 'imma_past_training_script_js',  plugins_url( 'js/', __FILE__ ).'script.js', array('jquery') );
 }
 add_action( 'wp_enqueue_scripts', 'imma_past_training_css_js' );
@@ -47,8 +52,8 @@ function imaa_past_trainings_shortcode($atts){
         'tax_query' => array(
             array(
                 'taxonomy' => 'tribe_events_cat',
-                'field'    => 'slug',
-                'terms'    => $tax_terms,
+                'field' => 'slug',
+                'terms' => $tax_terms,
             ),
         ),
     );
@@ -62,8 +67,8 @@ function imaa_past_trainings_shortcode($atts){
             $output .= '<div class="left-slider">';
             global $post;
             while($posts->have_posts()): $posts->the_post();
-                $output .= '<div id="slider-' . $post->ID . '" class="slider-wrap">';
-                    $output .= '<div class="horizontal">';
+                $output .= '<div class="slider-wrap slider-' . $post->ID . '">';
+                    $output .= '<div class="owl-carousel owl-theme">';
                     $event_gallery = get_field('imaa_event_gallery');
                     if( $event_gallery ){
                         foreach( $event_gallery as $event_gallery_image ){

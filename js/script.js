@@ -1,7 +1,21 @@
 jQuery(document).ready(function($) {
-    $('.horizontal').bxSlider({
-        prevText: "",
-        nextText: "",
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:10,
+        nav:true,
+        navText: ['<span></span>','<span></span>'],
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:1
+            },
+            1000:{
+                items:1
+            }
+        },
+        animateOut: 'fadeOut'
     });
     $('.vertical').bxSlider({
         mode: 'vertical',
@@ -18,6 +32,6 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         var eventId = $(this).data('event-id');
         $('.slider-wrap').hide();
-        $('#slider-' + eventId).show();
+        $('.slider-' + eventId).show();
     });
 });
